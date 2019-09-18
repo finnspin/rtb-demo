@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { Power2, TweenMax } from "gsap/TweenMax";
 export default {
   name: "VideoContainer",
   props: {

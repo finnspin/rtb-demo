@@ -31,8 +31,8 @@ export default {
         { id: 3, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 4, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 4, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
+        { id: 6, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
+        { id: 7, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
       ],
       videoWidth: 0,
       videoHeight: 0,
@@ -115,7 +115,7 @@ export default {
   }
   .video-row > div {
     /* we use absolute over normal flow to move */
-    /* the elements on thier own layers which should save */
+    /* the elements to thier own layers which should save */
     /* some resources */
     position: absolute;
     left: 0;
