@@ -1,26 +1,16 @@
 <template>
   <div class="home">
-    <div class="row">
-      <div class="col">
-        <VideoBar />
-      </div>
-      <!-- <div class="col">
-        <VideoBar class="float-right" />
-      </div> -->
-    </div>
+    <VideoRow :width="800" :height="224"/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import VideoBar from '@/components/VideoBar';
-export default {
-  name: 'home',
-  components: {
-    VideoBar
+  // @ is an alias to /src
+  import VideoRow from '@/components/VideoRow';
+  export default {
+    name: 'home',
+    components: {
+      VideoRow
+    }
   }
-}
 </script>
-
-<style >
-</style>

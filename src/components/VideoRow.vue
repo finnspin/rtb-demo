@@ -1,5 +1,5 @@
 <template>
-  <div class="video-row" ref="videoRow">
+  <div :style="{ width: width + 'px', height: height + 'px'}" class="video-row" ref="videoRow">
     <videoContainer
       v-for="video in videos"
       :key="video.id"
@@ -30,6 +30,8 @@ export default {
         { id: 2, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 3, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 4, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
+        { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
+        { id: 4, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
       ],
       videoWidth: 0,
@@ -40,8 +42,10 @@ export default {
   created: function() {
     this.timeline = new TimelineLite({ paused: true });
     // 4x2
-    this.videoWidth = this.width / 4;
-    this.videoHeight = this.height / 2;
+    const COL = 4;
+    const ROW = 2;
+    this.videoWidth = this.width / COL;
+    this.videoHeight = this.height / ROW;
   },
   mounted: function() {
     const parent = this.$refs.videoRow;
@@ -53,12 +57,13 @@ export default {
     if (elem)
       offset = elem.offsetWidth;
 
+    // define starting point
     this.timeline.addLabel("root");
 
     for (let i = 0; i < elements.length; i++) {
       const current = elements[i];
-      // between the pop ups (in sec)
-      const delay = i * 1.15;
+      // delay between the pop ups (in sec)
+      const delay = i * 1.05;
       this.timeline.fromTo(current, 0.6,
         {
           y: this.height / 2 - this.videoHeight / 2,
@@ -82,10 +87,6 @@ export default {
 
       const n = this.width / this.videoWidth;
 
-      console.log(n);
-
-      // const n = Math.ceil(elements.length / 2);
-
       if (i >= n) {
         newY = this.videoHeight;
         newX = offset * (i - n)
@@ -96,25 +97,26 @@ export default {
         x: newX,
         scale: 1,
         ease: Power2.easeInOut
-      }, "root+=" + (delay + 1))
+      }, "root+=" + (delay + 0.5))
     }
 
+    // start the animation
     this.timeline.play();
 
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .video-row {
-    min-width: 800px;
-    min-height: 224px;
     margin: auto;
     position: relative;
-    background-color: orange;
+    /* background-color: orange; */
   }
   .video-row > div {
+    /* we use absolute over normal flow to move */
+    /* the elements on thier own layers which should save */
+    /* some resources */
     position: absolute;
     left: 0;
     top: 0;
