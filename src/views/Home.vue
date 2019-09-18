@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <VideoRow :width="800" :height="224"/>
+    <VideoRow :width="800" :height="224" :cols="3" :rows="2"/>
   </div>
 </template>
 

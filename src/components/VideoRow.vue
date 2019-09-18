@@ -20,7 +20,9 @@ export default {
   },
   props: {
     width: Number,
-    height: Number
+    height: Number,
+    cols: Number,
+    rows: Number
   },
   data: function() {
     return {
@@ -42,10 +44,11 @@ export default {
   created: function() {
     this.timeline = new TimelineLite({ paused: true });
     // 4x2
-    const COL = 4;
-    const ROW = 2;
-    this.videoWidth = this.width / COL;
-    this.videoHeight = this.height / ROW;
+    console.log(this);
+    console.log(this.cols);
+
+    this.videoWidth = this.width / this.cols;
+    this.videoHeight = this.height / this.rows;
   },
   mounted: function() {
     const parent = this.$refs.videoRow;
@@ -59,6 +62,9 @@ export default {
 
     // define starting point
     this.timeline.addLabel("root");
+
+    let countRow = 0;
+    let countCol = 0;
 
     for (let i = 0; i < elements.length; i++) {
       const current = elements[i];
@@ -82,22 +88,20 @@ export default {
         "root+=" + delay
       );
 
-      let newY = 0;
-      let newX = offset * i;
-
-      const n = this.width / this.videoWidth;
-
-      if (i >= n) {
-        newY = this.videoHeight;
-        newX = offset * (i - n)
+      if (countCol == this.cols) {
+        countCol = 0;
+        countRow++;
       }
+
+      let newX = offset * countCol++;
+      let newY = this.videoHeight * countRow;
 
       this.timeline.to(current, 0.5, {
         y: newY,
         x: newX,
         scale: 1,
         ease: Power2.easeInOut
-      }, "root+=" + (delay + 0.5))
+      }, "root+=" + (delay + 0.5));
     }
 
     // start the animation
@@ -111,7 +115,6 @@ export default {
   .video-row {
     margin: auto;
     position: relative;
-    /* background-color: orange; */
   }
   .video-row > div {
     /* we use absolute over normal flow to move */
