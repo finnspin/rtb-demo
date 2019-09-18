@@ -1,63 +1,65 @@
 <template>
   <div class="video-column" ref="videoColumn">
-    <VideoWrapper
+    <videoContainer
       v-for="video in videos"
       :key="video.id"
-      :src="video.src"
-      ref="video" />
+      :src="video.src" />
   </div>
-
 </template>
 
 <script>
-import VideoWrapper from "./VideoWrapper";
-import {Back, TimelineLite} from "gsap/TweenMax";
+import VideoContainer from "./VideoContainer";
+import { Power2, TweenMax } from "gsap/TweenMax";
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export default {
   name: "VideoColumn",
   components: {
-    VideoWrapper
+    VideoContainer
   },
   data: function() {
     return {
-      videos: [
-        { id: 0, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 1, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 2, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 3, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
-      ],
-      columnHeight: 0,
-      videoHeight: 0,
-      timeline: null
+      videos: []
     };
   },
   methods: {
-    setColumnHeight() {
-      this.columnHeight = this.$refs.videoColumn.clientHeight;
-    },
-    start() {
-      this.timeline.play();
+    getData() {
+      // mimic incoming objects that describe video streams
+      const that = this;
+      for (let i = 0; i < getRandomInt(2, 5); i++) {
+        setTimeout(() => {
+          that.videos.push(
+            { id: i, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
+          );
+        }, getRandomInt(500, 3500));
+      }
     }
   },
-  created: function () {
-    console.log('created');
-    this.timeline = new TimelineLite({ paused: true });
+  updated: function() {
+    console.log("updated");
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been re-rendered
+      const parent = this.$refs.videoColumn;
+      const elements = parent.getElementsByClassName('video-container');
+      const elem = elements[0];
+      let offset = 0;
+
+      if (elem)
+        offset = elem.offsetHeight;
+
+      const newHeight = offset * elements.length;
+
+      TweenMax.to(parent, 0.5, { height: newHeight, overwrite: true, ease: Power2.easeInOut });
+    });
   },
-  mounted: function () {
-    this.setColumnHeight();
-    const elements = this.$refs.videoColumn.getElementsByClassName('video-wrapper');
-    this.timeline.addLabel("root");
-    const DURATION = 0.8;
-    const DELAY = 0.15;
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i];
-      this.timeline.from(element, DURATION, { y: 0, autoAlpha: 0, scale: 0.5 }, "root+=" + i*DELAY);
-    }
-    this.timeline.from(this.$refs.videoColumn, DELAY * elements.length, { y: this.columnHeight/2 }, "root");
-    this.start();
-  },
-  updated: function () {
-    console.log('updated')
+  mounted: function() {
+    this.getData();
   }
 };
 </script>
@@ -65,8 +67,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .video-column {
-    max-width: 200px;
-    max-height: 800px;
-    /* background-color: #f44336; */
+    display: inline-block;
+    position: relative;
+    background-color: orange;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    box-sizing: unset;
   }
 </style>
