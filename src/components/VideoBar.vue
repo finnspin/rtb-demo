@@ -1,18 +1,18 @@
 <template>
   <div class="video-bar">
     <div>
-      <VideoColumn />
+      <VideoRow :width="800" :height="224"/>
     </div>
   </div>
 </template>
 
 <script>
-import VideoColumn from "./VideoColumn";
+import VideoRow from "./VideoRow";
 
 export default {
   name: "VideBar",
   components: {
-    VideoColumn
+    VideoRow
   }
 };
 </script>
@@ -22,8 +22,8 @@ export default {
   .video-bar {
     display: flex;
     justify-content: center;
-    height: 600px;
-    width: 300px;
-    flex-direction: column;
+    /* height: 600px;
+    width: 300px; */
+    /* flex-direction: column; */
   }
 </style>

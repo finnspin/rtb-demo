@@ -4,9 +4,9 @@
       <div class="col">
         <VideoBar />
       </div>
-      <div class="col">
+      <!-- <div class="col">
         <VideoBar class="float-right" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
