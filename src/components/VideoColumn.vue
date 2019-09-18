@@ -55,6 +55,7 @@ export default {
 
       const newHeight = offset * elements.length;
 
+      // The animation must be overwritten for possible overlapping calls
       TweenMax.to(parent, 0.5, { height: newHeight, overwrite: true, ease: Power2.easeInOut });
     });
   },
