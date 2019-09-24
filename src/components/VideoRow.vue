@@ -1,6 +1,6 @@
 <template>
   <div :style="{ width: width + 'px', height: height + 'px'}" class="video-row" ref="videoRow">
-    <videoContainer
+    <VideoContainer
       v-for="video in videos"
       :key="video.id"
       :width="videoWidth"
