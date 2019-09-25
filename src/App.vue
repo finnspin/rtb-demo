@@ -2,7 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Sample Adding Players</router-link> |
-      <router-link to="/game">Game</router-link>
+      <router-link to="/game">Game</router-link> |
+      <router-link to="/video-row-preview">VideoRow</router-link> |
+      <router-link to="/rect-shape-preview">RectShape</router-link>
     </div>
     <router-view/>
   </div>
