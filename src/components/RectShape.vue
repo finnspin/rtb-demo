@@ -1,19 +1,14 @@
 <template>
   <div class="rect" :style="{ width: width + 'px', height: height + 'px'}">
     <canvas :width="width" :height="height" ref="canvas" />
-    <VideoContainer
-      :width="width - step*8"
-      :height="height - step*8"
-      src="http://dl5.webmfiles.org/big-buck-bunny_trailer.webm"
-      :style="{ left: step*4 + 'px', top: step*4 + 'px'}"
-       />
+    <div class="rect-container">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script>
 import { TweenMax, Power0 } from "gsap/TweenMax";
-
-import VideoContainer from '@/components/VideoContainer';
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
@@ -48,9 +43,6 @@ export default {
     width: Number,
     color: String,
     step: Number
-  },
-  components: {
-    VideoContainer
   },
   computed: {
     ctx: function() {
@@ -124,5 +116,15 @@ export default {
   }
   .video-container {
     position: absolute;
+  }
+  .rect-container {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

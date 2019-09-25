@@ -8,7 +8,7 @@
   // @ is an alias to /src
   import VideoRow from '@/components/VideoRow';
   export default {
-    name: 'home',
+    name: 'VideoRowPreview',
     components: {
       VideoRow
     }

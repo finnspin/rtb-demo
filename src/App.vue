@@ -4,7 +4,8 @@
       <router-link to="/">Sample Adding Players</router-link> |
       <router-link to="/game">Game</router-link> |
       <router-link to="/video-row-preview">VideoRow</router-link> |
-      <router-link to="/rect-shape-preview">RectShape</router-link>
+      <router-link to="/rect-shape-preview">RectShape</router-link>|
+      <router-link to="/head-to-head-preview">HeadToHead</router-link>
     </div>
     <router-view/>
   </div>
