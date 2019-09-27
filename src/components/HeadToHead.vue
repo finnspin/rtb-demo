@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { Back, TweenMax, TimelineLite, Power2 } from "gsap/TweenMax";
+import { Back, TimelineLite, Power2 } from "gsap/TweenMax";
 export default {
   name: "HeadToHead",
   props: {
@@ -15,11 +15,11 @@ export default {
     const player1 = this.$slots.default[0].elm;
     const player2 = this.$slots.default[1].elm;
 
-    const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) * 1.5;
 
     const tl = new TimelineLite();
 
-    tl.addLabel("move-1")
+    tl.addLabel("move-1", "+=0.5")
       .fromTo(player1, 0.4,
         { x: -w/2, scale: 0.9 },
         { x: 0, scale: 0.9, ease: Power2.easeInOut },
@@ -46,14 +46,14 @@ export default {
         overwrite: false
       }, "move-2")
       .addLabel("move-3", "+=0.0")
-      .to(player1, 0.2, { scale: 1,
+      .to(player1, 0.2, {
         x: 10,
         scale: 1,
         rotation: 0,
         ease: Power2.easeIn,
         overwrite: false
       }, "move-3")
-      .to(player2, 0.2, { scale: 1,
+      .to(player2, 0.2, {
         x: -10,
         scale: 1,
         rotation: 0,

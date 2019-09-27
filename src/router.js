@@ -5,6 +5,7 @@ import Game from './views/Game.vue'
 import VideoRowPreview from './views/VideoRowPreview.vue'
 import RectShapePreview from './views/RectShapePreview.vue'
 import HeadToHeadPreview from './views/HeadToHeadPreview.vue'
+import HeadToHead2 from './views/HeadToHead2.vue'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/head-to-head-preview',
       name: 'head-to-head-preview',
       component: HeadToHeadPreview
+    },
+    {
+      path: '/head-to-head-preview-2',
+      name: 'head-to-head-preview-2',
+      component: HeadToHead2
     }
   ]
 })

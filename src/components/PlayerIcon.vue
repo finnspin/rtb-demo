@@ -32,7 +32,7 @@ export default {
   .name {
     width: 100%;
     position: absolute;
-    bottom: 0;
+    bottom: 20px;
     color: #fff;
     font-weight: 700;
     font-size: 30px;

@@ -1,28 +1,38 @@
 <template>
   <div :style="{ width: width + 'px', height: height + 'px'}" class="video-row" ref="videoRow">
-    <VideoContainer
+    <Container1x1
+      :style="{
+        width: width/6 - 15 + 'px'
+      }"
       v-for="video in videos"
-      :key="video.id"
-      :width="videoWidth"
-      :height="videoHeight"
-      :src="video.src" />
+      :color="color"
+      :key="video.id" >
+      <VideoContainer
+        :width="videoWidth"
+        :height="videoHeight"
+        :src="video.src" />
+    </Container1x1>
   </div>
 </template>
 
 <script>
 import VideoContainer from "./VideoContainer";
+import Container1x1 from "./Container1x1";
 import { Back, TimelineLite, Power2 } from "gsap/TweenMax";
 
 export default {
   name: "VideoRow",
   components: {
-    VideoContainer
+    VideoContainer,
+    Container1x1
   },
   props: {
     width: Number,
     height: Number,
     cols: Number,
-    rows: Number
+    rows: Number,
+    delay: Number,
+    color: String
   },
   data: function() {
     return {
@@ -32,9 +42,7 @@ export default {
         { id: 2, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 3, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
         { id: 4, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 6, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" },
-        { id: 7, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
+        { id: 5, src: "http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" }
       ],
       videoWidth: 0,
       videoHeight: 0,
@@ -52,7 +60,7 @@ export default {
   },
   mounted: function() {
     const parent = this.$refs.videoRow;
-    const elements = parent.getElementsByClassName('video-container');
+    const elements = parent.getElementsByClassName('container-1x1-parent');
     const elem = elements[0];
 
     let offset = 0;
@@ -69,8 +77,8 @@ export default {
     for (let i = 0; i < elements.length; i++) {
       const current = elements[i];
       // delay between the pop ups (in sec)
-      const delay = i * 1.05;
-      this.timeline.fromTo(current, 0.6,
+      const delay = i * (0.6 + (-i * 0.005));
+      this.timeline.fromTo(current, (0.6 + (-i * 0.05)),
         {
           y: this.height / 2 - this.videoHeight / 2,
           x: this.width / 2 - this.videoWidth / 2,
@@ -80,7 +88,7 @@ export default {
         {
           y: this.height / 2 - this.videoHeight / 2,
           x: this.width / 2 - this.videoWidth / 2,
-          scale: 2.2,
+          scale: 1.5,
           ease: Back.easeOut.config(2),
           autoAlpha: 1,
         },
@@ -96,22 +104,31 @@ export default {
       let newX = offset * countCol++;
       let newY = this.videoHeight * countRow;
 
-      this.timeline.to(current, 0.5, {
+      this.timeline.to(current, 0.5 + (-i * 0.04), {
         y: newY,
-        x: newX,
+        x: newX + 15 * i,
         scale: 1,
         ease: Power2.easeInOut
-      }, "root+=" + (delay + 0.5));
+      }, "root+=" + (delay + 0.5 + (-i * 0.07)));
     }
 
-    // start the animation
-    this.timeline.play();
+    setTimeout(() => {
+      // start the animation
+      this.timeline.play();
+    }, this.delay * 1000);
+
 
   }
 };
 </script>
 
 <style scoped>
+  .name {
+    color: #fff;
+  }
+  .rounded > div {
+    pointer-events: none;
+  }
   .video-row {
     margin: auto;
     position: relative;

@@ -1,6 +1,6 @@
 <template>
   <div class="video-container">
-    <video :width="width + 'px'" :height="height + 'px'" autoplay muted loop>
+    <video width="100%" height="auto" autoplay muted loop>
       <source :src="src" type="video/webm">
         Sorry, your browser doesn't support embedded videos.
     </video>
@@ -21,6 +21,13 @@ export default {
 <style scoped>
   .video-container {
     position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
   }
   .video-container video {
     display: flex;

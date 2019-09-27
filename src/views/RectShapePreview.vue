@@ -13,10 +13,6 @@
         src="http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" />
 
     </RectShape>
-
-
-
-    </RectShape>
   </div>
 </template>
 
