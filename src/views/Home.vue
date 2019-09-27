@@ -1,26 +1,94 @@
 <template>
-  <div class="game-main">
-    <div class="row row-timer">
-      <div>
-        <span class="team-name">Team 1: </span><span class="points">142</span> |
-        <span class="team-name">Team 2: </span><span class="points">142</span> |
-        <span class="team-name">Team 3: </span><span class="points">142</span>
+  <div class="
+    game-main
+    flex-column
+    d-flex
+    justify-content-between">
+    <div class="
+      score-table-row
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center">
+      <div class="score-table">
+        <span class="orange-text">{{team1.name}}:</span><span> {{team1.score}}</span> |
+        <span class="orange-text">{{team2.name}}:</span><span> {{team2.score}}</span> |
+        <span class="orange-text">{{team3.name}}:</span><span> {{team3.score}}</span>
       </div>
-      <div class="timer"><span>14:11</span></div>
     </div>
-    <div class="row row-current-team">
-      <VideoRow :width="740" :height="120" :cols="6" :rows="1"  :delay="0.0" color="#26bfa7"/>
+    <div class="
+      current-team
+      d-flex
+      flex-column
+      justify-content-center
+      dark-grey
+      align-items-center">
+      <StackContainer class="justify-content-center">
+        <PlayerIcon
+          v-for="(player, i) in team1.players"
+          :key="team1.name + '-' + i"
+          :color="team1.color">
+          <template v-slot:name-top>
+            <span class="player-name">{{player.name}}</span>
+          </template>
+        </PlayerIcon>
+      </StackContainer>
+      <div class="team-tag-wrap"><div class="team-tag">{{team1.name}}</div></div>
     </div>
-    <div class="row host-row">
-      <VideoContainer class="host-video"
-        src="http://dl5.webmfiles.org/big-buck-bunny_trailer.webm" />
+    <div class="
+      flex-grow-1
+      d-flex
+      flex-column
+      justify-content-center
+      align-items-center ">
+      <PlayerIcon />
     </div>
-    <div class="row row-two-teams">
-      <div class="col">
-        <VideoRow :width="500" :height="224" :cols="6" :rows="1" :delay="3" color="#731493"/>
+    <div class="
+      tow-teams-row
+      row
+      no-gutters
+      dark-grey">
+      <div class="
+        team-2-col
+        col-lg-6
+        col-md-12
+        d-flex
+        flex-column
+        justify-content-center
+        align-items-center">
+        <div class="team-tag-wrap"><div class="team-tag">{{team2.name}}</div></div>
+        <StackContainer class="justify-content-start">
+          <PlayerIcon
+            v-for="(player, i) in team2.players"
+            :key="team2.name + '-' + i"
+            :color="team2.color">
+            <template v-slot:name-bottom>
+              <span class="player-name">{{player.name}}</span>
+            </template>
+          </PlayerIcon>
+        </StackContainer>
       </div>
-      <div class="col">
-        <VideoRow :width="510" :height="224" :cols="6" :rows="1" :delay="3" color="#ce2a28"/>
+      <div class="
+        d-flex
+        vertical-line
+      "></div>
+      <div class="
+        team-3-col
+        col-lg-6
+        col-md-12
+        d-flex
+        flex-column
+        justify-content-center
+        align-items-center">
+        <div class="team-tag-wrap"><div class="team-tag">{{team3.name}}</div></div>
+        <StackContainer class="justify-content-end">
+          <PlayerIcon v-for="(player, i) in team3.players" :key="team3.name + '-' + i"
+          :color="team3.color">
+            <template v-slot:name-bottom>
+              <span class="player-name">{{player.name}}</span>
+            </template>
+          </PlayerIcon>
+        </StackContainer>
       </div>
     </div>
   </div>
@@ -28,168 +96,178 @@
 
 <script>
 // @ is an alias to /src
-import VideoContainer from "@/components/VideoContainer";
-import VideoRow from "@/components/VideoRow";
-import { Back, TweenMax, Power2 } from "gsap/TweenMax";
+import PlayerIcon from '@/components/PlayerIcon.vue';
+import StackContainer from '@/components/StackContainer.vue';
+import random from 'random-name';
 export default {
   name: 'Home',
   components: {
-    VideoContainer,
-    VideoRow
+    PlayerIcon,
+    StackContainer
   },
   data() {
     return {
       team1: {
-        'name': 'All About Eve',
-        'color': 'red',
-        'points': 50,
-        'players': []
+        name: "Team 1",
+        color: "#558b2f",
+        players: [],
+        score: 99
       },
       team2: {
-        'name': 'Bonanza',
-        'color': 'blue',
-        'points': 45,
-        'players': []
+        name: "Team 2",
+        color: "#f44336",
+        players: [],
+        score: 99
       },
       team3: {
-        'name': 'Asteroids',
-        'color': 'orange',
-        'points': 30,
-        'players': []
+        name: "Team 3",
+        color: "#2196f3",
+        players: [],
+        score: 99
       }
     }
   },
   methods: {
+
+  },
+  created() {
+    let i = 0;
+    for (i = 0; i < 6; i++)
+      this.team1.players.push({
+        name: random.first()
+      })
+
+    for (i = 0; i < 4; i++)
+      this.team2.players.push({
+        name: random.first()
+      })
+
+    for (i = 0; i < 8; i++)
+      this.team3.players.push({
+        name: random.first()
+      })
+
   },
   mounted() {
 
-    // TweenMax.set(".host-row", {perspective:3000});
-    // TweenMax.set(".host-video", {transformStyle:"preserve-3d"});
-
-    TweenMax.from('.host-video', 0.4, { scale: 0.8, alpha: 0, delay: 0.5, ease: Power2.easeOut })
-
-    const elems = document.getElementsByClassName('rounded');
-
-    for (let i = 0; i < elems.length; i++) {
-      console.log(elems[i])
-      elems[i].addEventListener('click', () => {
-        console.log("click")
-        // TweenMax.to(elems[i], 0.4, { borderRadius: 0, ease: Power2.easeOut })
-      })
-    }
-
-    let toggle = false;
-
-    const w = Math.max(window.innerWidth || 0);
-
-    document.getElementsByClassName('host-video')[0]
-      .addEventListener('click', () => {
-        TweenMax.to('.host-video', 0.4, {
-          scale: toggle ? 0.5 : 1,
-          x: toggle ? w / 2 - 150 : 0,
-          y: toggle ? -70 : 0,
-        })
-        toggle = !toggle;
-      })
   }
 }
 </script>
-<style>
-  #nav {
-    display: none;
-  }
-</style>
 <style scoped>
-  .game-main {
-    background-color: #68635f;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-    /* top: -30px; */
-  }
-  .team-name {
-    color: #ff641b;
-  }
-  .row {
-    display: flex;
-    padding: 30px;
-  }
-  .game-main > .row {
-    flex: 1;
-  }
-  .host-video {
-    margin: auto;
-  }
-  .host-row > div {
-    /* max-width: 580px !important; */
-    margin: auto;
-  }
-  .row-timer {
-    background-color: #2d2c2a;
-    color: #fff;
-    text-align: center;
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-  }
-  .host-row {
-    min-height: 280px;
-  }
-  .host-row::before {
-    content: "";
+  .team-tag-wrap {
     position: absolute;
     width: 100%;
-    height: 100%;
+  }
+  .team-2-col .team-tag-wrap,
+  .team-3-col .team-tag-wrap {
     top: 0;
-    left: 0;
-    background: url(https://photos2.fotosearch.com/bthumb/CSP/CSP207/black-and-white-bee-cells-seamless-clipart__k21182512.jpg);
-    opacity: 0.05;
   }
-  .row-two-teams {
-    border-top: 2px solid #d44f34;
-    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.3);
+  .current-teams .team-tag-wrap {
+    bottom: 0;
   }
-  .row-two-teams > .col {
-    flex-basis: 50%;
+  .vertical-line {
+    height: 80%;
+    width: 1px;
+    margin-right: -1px;
+    background-color: #616161;
+    align-self: center;
   }
-  .row-current-team {
-    /* margin-top: 30px; */
-    /* padding-top: 40px; */
-    border-bottom: 2px solid #d44f34;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  .current-team .team-tag {
+    top: 10px;
   }
-  .row-current-team > div {
+  .tow-teams-row .team-tag {
+    top: -14px;
+  }
+  .tow-teams-row .stack-container {
+    padding-top: 26px;
+  }
+  .tow-teams-row,
+  .current-team {
     position: relative;
-    top: 12px;
   }
-  .row-current-team,
-  .row-two-teams {
+  .current-team .stack-container {
+    padding-bottom: 26px;
+  }
+  .team-tag {
+    display: inline-block;
+    position: relative;
+    background-color: #f36523;
+    color: #fff;
+    font-size: 18px;
+    height: 28px;
+    margin-bottom: -28px;
+    line-height: 28px;
+    position: relative;
+    vertical-align: top;
+  }
+  .team-tag::before {
+    left: -10px;
+  }
+  .team-tag::after {
+    left: 10px;
+  }
+  .team-tag::before,
+  .team-tag::after {
+    vertical-align: top;
+    content: "";
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    background-color: #f36523;
+    transform: rotate(45deg);
+  }
+  .tow-teams-row {
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.33);
+  }
+  .current-team {
+    border-bottom: 2px solid #f36523;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.33);
+  }
+  .team-2-col,
+  .team-3-col {
+    border-top: 2px solid #f36523;
+  }
+  .orange {
+    background-color: #f36523;
+  }
+  .orange-text {
+    color: #f36523;
+  }
+  .score-table-row {
+    background-color: #2d2c2a;
+  }
+  .player-name {
+    color: #fff;
+  }
+  .stack-container {
+    padding: 10px;
+  }
+  .current-team .stack-container {
+    width: 100%;
+  }
+  .stack-container .player-icon {
+    margin: 6px 14px;
+    flex-basis: 10%;
+    min-width: 80px;
+  }
+  .score-table {
+    color: #fff;
+  }
+  .dark-grey {
     background-color: #413d3c;
   }
-  .timer {
-    z-index: 99;
-    position: absolute;
-    bottom: -10px;
-    right: -10px;
-    width: 105px;
-    height: 33px;
-    font-size: 29px;
-    line-height: 30px;
-    color: #23b249;
+  .light-grey {
+    background-color: #68635f;
   }
-  .timer span {
-    position: relative;
-  }
-  .timer::before {
-    content: "";
+  .game-main {
+    background-color: #68635f;
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background-color: #2d2c2a;
-    transform: skew(40deg);
+  }
+  .icon {
+    max-width: 100px;
   }
 </style>

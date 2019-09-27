@@ -1,16 +1,10 @@
 <template>
   <div id="app">
-
-    <div id="nav">
+    <!-- <div id="nav">
       <div>
-        <router-link to="/">Sample Adding Players</router-link> |
-        <router-link to="/game">Game</router-link> |
-        <router-link to="/video-row-preview">VideoRow</router-link> |
-        <router-link to="/rect-shape-preview">RectShape</router-link> |
-        <router-link to="/head-to-head-preview">HeadToHead</router-link> |
-        <router-link to="/head-to-head-preview-2">HeadToHead2</router-link>
+        <router-link to="/">Game</router-link>
       </div>
-    </div>
+    </div> -->
     <router-view/>
   </div>
 </template>
@@ -31,8 +25,11 @@ body {
 }
 #nav {
   z-index: 99;
-  position: relative;
+  position: absolute;
   height: 30px;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
