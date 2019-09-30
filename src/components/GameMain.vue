@@ -4,8 +4,7 @@
       fill-height
       game-main
       flex-column
-      d-flex
-      justify-between">
+      d-flex">
       <div class="
         score-table-row
         d-flex
