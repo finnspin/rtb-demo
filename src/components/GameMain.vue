@@ -152,7 +152,7 @@ export default {
         name: random.first()
       })
 
-    for (i = 0; i < 8; i++)
+    for (i = 0; i < 7; i++)
       this.team3.players.push({
         name: random.first()
       })
@@ -318,7 +318,7 @@ export default {
 
   .player-icon {
     margin: 6px 14px;
-    flex-basis: 8.5%;
+    flex-basis: 8.2%;
     min-width: 75px;
   }
 
