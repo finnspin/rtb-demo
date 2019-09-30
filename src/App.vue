@@ -1,12 +1,19 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <!-- <div id="nav">
       <div>
         <router-link to="/">Game</router-link>
       </div>
     </div> -->
-    <router-view/>
-  </div>
+    <!-- Sizes your content based upon application components -->
+    <v-content>
+      <!-- Provides the application the proper gutter -->
+      <v-container fluid fill-height pa-0>
+        <!-- If using vue-router -->
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <style>
